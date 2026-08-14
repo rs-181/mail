@@ -11,13 +11,15 @@
    ========================================================================== */
 
 const FIREBASE_CONFIG = {
-  apiKey: "REPLACE_WITH_FIREBASE_API_KEY",
-  authDomain: "REPLACE_WITH_PROJECT.firebaseapp.com",
-  projectId: "REPLACE_WITH_PROJECT_ID",
-  storageBucket: "REPLACE_WITH_PROJECT.appspot.com",
-  messagingSenderId: "REPLACE_WITH_SENDER_ID",
-  appId: "REPLACE_WITH_APP_ID"
+  apiKey: "AIzaSyADliCbrIFLrIX6cwxKTR5hjSX-CTlB_hw",
+  authDomain: "rinix-mail.firebaseapp.com",
+  projectId: "rinix-mail",
+  storageBucket: "rinix-mail.firebasestorage.app",
+  messagingSenderId: "1087033598495",
+  appId: "1:1087033598495:web:27291253624f24de93eb2a",
+  measurementId: "G-8BVFD1FYM7"
 };
+
 
 const DOMAIN = "rinix.online";
 const ADMIN_EMAIL = "info@rinix.online";
