@@ -1,0 +1,14 @@
+{
+  "name": "Rinix Mail",
+  "short_name": "Rinix Mail",
+  "description": "Fast, secure username@rinix.online webmail with developer API access.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F8FAFC",
+  "theme_color": "#0F172A",
+  "icons": [
+    { "src": "/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

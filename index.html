@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rinix Mail — Fast, secure username@rinix.online email</title>
+<meta name="description" content="Claim a unique username@rinix.online address. Ultra-fast webmail, developer API keys, and built-in anti-scam protection.">
+<meta name="theme-color" content="#0F172A">
+<link rel="canonical" href="https://mail.rinix.online/">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/logo.png">
+
+<!-- Preconnect for sub-second first paint -->
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.gstatic.com">
+
+<!-- Render-blocking-free stylesheet: single small file, no web fonts -->
+<link rel="stylesheet" href="/style.css">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rinix Mail — Fast, secure username@rinix.online email">
+<meta property="og:description" content="Claim a unique username@rinix.online address with sub-second webmail, developer API keys, and anti-scam protection.">
+<meta property="og:url" content="https://mail.rinix.online/">
+<meta property="og:image" content="https://mail.rinix.online/logo.png">
+<meta name="twitter:card" content="summary">
+
+<!-- JSON-LD structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Rinix Mail",
+  "url": "https://mail.rinix.online",
+  "logo": "https://mail.rinix.online/logo.png",
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "Rinix Digital Agency",
+    "url": "https://rinix.online"
+  },
+  "email": "info@rinix.online",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "info@rinix.online",
+    "contactType": "customer support"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Rinix Mail",
+  "applicationCategory": "CommunicationApplication",
+  "operatingSystem": "Any (Progressive Web App)",
+  "url": "https://mail.rinix.online",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- Pre-paint boot mark: removed by app.js once the shell is ready -->
+<div id="app-loading" aria-hidden="true"><div class="boot-mark"></div></div>
+
+<div id="toast-stack" aria-live="polite"></div>
+
+<!-- ===================== MARKETING / LANDING VIEW ===================== -->
+<div id="marketing-view">
+  <nav class="site-nav">
+    <a class="brand" href="/">
+      <span class="brand-mark">R</span> Rinix Mail
+    </a>
+    <div class="nav-actions">
+      <button class="btn btn-ghost btn-sm" data-open-signin>Sign in</button>
+      <button class="btn btn-primary btn-sm" data-open-signup>Get your address</button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Sub-second webmail</span>
+        <h1>Your identity is <em>you@rinix.online</em></h1>
+        <p class="lede">One handle, permanently yours. Fast enough to feel instant, secure enough to trust, and built with a developer API for everything you'd want to automate.</p>
+
+        <div class="handle-picker">
+          <input id="hero-handle-input" type="text" placeholder="yourname" autocomplete="off" spellcheck="false" aria-label="Choose your handle">
+          <span class="suffix">@rinix.online</span>
+          <button id="hero-claim-btn" class="btn-claim" type="button">Claim it</button>
+        </div>
+        <div id="hero-handle-status" class="handle-status"></div>
+      </div>
+
+      <div class="hero-panel">
+        <div class="mail-preview-row">
+          <span class="dot" style="background:#10B981"></span>
+          <div>
+            <strong style="font-size:.88rem">Rinix Team</strong>
+            <div style="font-size:.82rem;color:#CBD5E1">Welcome to Rinix Mail</div>
+            <small>Verified sender · info@rinix.online</small>
+          </div>
+        </div>
+        <div class="mail-preview-row">
+          <span class="dot" style="background:#6366F1"></span>
+          <div>
+            <strong style="font-size:.88rem">API Access</strong>
+            <div style="font-size:.82rem;color:#CBD5E1">Your key: rnx_live_••••••••</div>
+            <small>Generated from the developer portal</small>
+          </div>
+        </div>
+        <div class="mail-preview-row">
+          <span class="dot" style="background:#EF4444"></span>
+          <div>
+            <strong style="font-size:.88rem">Scam shield</strong>
+            <div style="font-size:.82rem;color:#CBD5E1">Lookalike domain flagged automatically</div>
+            <small>Anti-phishing detection</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="feature-strip">
+    <div class="feature-card">
+      <div class="ico">⚡</div>
+      <h3>Sub-second by design</h3>
+      <p>Flat static delivery over Vercel's edge network with aggressive service-worker caching — no framework overhead.</p>
+    </div>
+    <div class="feature-card">
+      <div class="ico">🔒</div>
+      <h3>One handle, one owner</h3>
+      <p>Atomic Firestore transactions guarantee your handle can never be double-claimed, even under concurrent signups.</p>
+    </div>
+    <div class="feature-card">
+      <div class="ico">🛠️</div>
+      <h3>Built for developers</h3>
+      <p>Generate API keys and SMTP/IMAP credentials from your dashboard to wire Rinix Mail into your own tools.</p>
+    </div>
+  </section>
+
+  <footer style="max-width:1120px;margin:0 auto;padding:24px;color:var(--text-muted);font-size:.8rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <span>© <span id="year"></span> Rinix Mail · a Rinix Digital Agency product</span>
+    <a href="mailto:info@rinix.online">info@rinix.online</a>
+  </footer>
+</div>
+
+<!-- ===================== AUTH MODAL ===================== -->
+<div id="auth-modal-backdrop" class="modal-backdrop hidden">
+  <div id="auth-modal" class="modal" style="position:relative" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <button id="modal-close-btn" class="modal-close" aria-label="Close">✕</button>
+    <h2 id="auth-title">Claim your handle</h2>
+    <p class="sub" id="auth-sub">Pick a unique username@rinix.online identity.</p>
+    <form id="auth-form" novalidate>
+      <div class="field">
+        <label for="auth-handle">Handle</label>
+        <input id="auth-handle" type="text" placeholder="yourname" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="auth-password">Password</label>
+        <input id="auth-password" type="password" placeholder="At least 8 characters" autocomplete="new-password" required minlength="8">
+      </div>
+      <div class="field-error" id="auth-error"></div>
+      <button id="auth-submit" class="btn btn-primary btn-block" type="submit">Create account</button>
+    </form>
+    <div class="modal-switch">
+      <span id="auth-switch-copy">Already have an account?</span>
+      <button id="auth-switch-btn" type="button">Sign in</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== APP SHELL (post sign-in) ===================== -->
+<div id="app-shell">
+  <div class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">R</span> Rinix Mail</a>
+    <div class="search-box">
+      <span aria-hidden="true">🔍</span>
+      <input type="text" placeholder="Search mail" aria-label="Search mail">
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-left:auto">
+      <span id="topbar-email" style="font-size:.8rem;color:var(--text-muted)" class="hidden-mobile"></span>
+      <div id="topbar-avatar" class="avatar">U</div>
+      <button id="signout-btn" class="btn btn-ghost btn-sm">Sign out</button>
+    </div>
+  </div>
+
+  <div class="workspace">
+    <aside class="sidebar">
+      <div class="nav-item active" data-desktop-nav="inbox">📥 Inbox <span class="count" id="inbox-count"></span></div>
+      <div class="nav-item" data-desktop-nav="compose">✏️ Compose</div>
+      <div class="nav-item" data-desktop-nav="dev">🛠️ Developer</div>
+      <div class="sidebar-cta">
+        <button class="btn btn-dark btn-sm btn-block" data-desktop-nav="compose">New message</button>
+      </div>
+    </aside>
+
+    <section id="mail-list" class="mail-list mobile-active">
+      <div class="mail-list-head">
+        <h2>Inbox</h2>
+      </div>
+      <div id="mail-list-items"></div>
+    </section>
+
+    <section id="detail-pane" class="detail-pane">
+      <div id="detail-view">
+        <div id="detail-empty" class="detail-empty">
+          <span style="font-size:2rem">📭</span>
+          <p>Select a message to read it here.</p>
+        </div>
+        <div id="detail-content" class="hidden">
+          <div class="detail-header">
+            <h2 id="detail-subject"></h2>
+            <div class="detail-meta">
+              <span id="detail-from"></span>
+              <time id="detail-date"></time>
+            </div>
+            <div id="detail-badge"></div>
+          </div>
+          <div class="detail-body" id="detail-body"></div>
+        </div>
+      </div>
+
+      <div id="composer-panel" class="hidden">
+        <h2 style="margin-bottom:14px;font-size:1.1rem;color:var(--brand-dark)">New message</h2>
+        <form id="compose-form">
+          <div id="composer">
+            <input id="compose-to" type="email" placeholder="To" required>
+            <input id="compose-subject" type="text" placeholder="Subject" required>
+            <textarea id="compose-body" placeholder="Write your message…"></textarea>
+            <div class="composer-actions">
+              <span style="font-size:.78rem;color:var(--text-muted)">Sends via your Rinix address</span>
+              <button class="btn btn-primary" type="submit">Send</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div id="dev-panel" class="hidden">
+        <h2 style="margin-bottom:14px;font-size:1.1rem;color:var(--brand-dark)">Developer portal</h2>
+        <div class="dev-grid">
+          <div class="key-card">
+            <h3>API key</h3>
+            <p>Generate a key for programmatic access. Shown once — store it securely.</p>
+            <button id="generate-key-btn" class="btn btn-dark btn-sm">Generate new key</button>
+            <div class="hidden" style="margin-top:12px">
+              <div id="api-key-output" class="key-value"></div>
+            </div>
+          </div>
+          <div class="key-card">
+            <h3>Mail credentials</h3>
+            <p>Use these with any SMTP/IMAP client.</p>
+            <table class="creds-table">
+              <tr><td>Address</td><td id="dev-email">—</td></tr>
+              <tr><td>IMAP</td><td id="dev-imap">—</td></tr>
+              <tr><td>SMTP</td><td id="dev-smtp">—</td></tr>
+              <tr><td>Account ID</td><td id="dev-uid">—</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <nav class="bottom-nav">
+    <button data-view="list" class="active" aria-label="Inbox">📥<span>Inbox</span></button>
+    <button data-view="detail" aria-label="Search">🔍<span>Search</span></button>
+    <button data-view="compose" aria-label="Compose">✏️<span>Compose</span></button>
+    <button data-view="dev" aria-label="Developer">🛠️<span>Developer</span></button>
+  </nav>
+</div>
+
+<!-- Firebase (compat SDK — swap for modular SDK if you prefer tree-shaking) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js" defer></script>
+<script src="/app.js" defer></script>
+<script src="/sw-register.js" defer></script>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
