@@ -18,8 +18,9 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: from || 'Rinix Mail <noreply@rinix.online>',
+        from: from || 'Rinix Mail <noreply@mail.rinix.online>',
         to: [to],
+        reply_to: from,
         subject: subject,
         text: body,
       }),
