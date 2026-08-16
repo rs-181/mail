@@ -363,26 +363,27 @@ async function generateApiKey(){
 /* -------------------------------------------------------------------------
    Composer
    ------------------------------------------------------------------------- */
-async function sendMail(to, subject, body){
-  // A flat static-hosting repo has no server runtime of its own, so actual
-  // SMTP relay through Zoho requires a serverless endpoint (e.g. Vercel
-  // function) that this client calls. We attempt that endpoint first and
-  // fall back to a mailto: draft so composing always works even before
-  // that backend is wired up.
-  try{
+async function sendMail(to, subject, body) {
+  try {
     const res = await fetch("/api/send", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ from: state.user?.email, to, subject, body })
     });
-    if (!res.ok) throw new Error("send endpoint unavailable");
-    toast("Message sent.", "success");
-  }catch{
-    const mailto = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-    toast("Live send isn't configured yet — opened your default mail app instead.");
+    
+    const data = await res.json();
+    
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to send email");
+    }
+    
+    toast("Message sent successfully!", "success");
+  } catch (err) {
+    console.error("Send Mail Error:", err);
+    toast("Error: " + err.message, "error");
   }
 }
+
 
 /* -------------------------------------------------------------------------
    Mobile view switching
