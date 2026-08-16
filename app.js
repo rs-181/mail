@@ -30,7 +30,7 @@ const RESERVED_HANDLES = new Set([
 ]);
 const HANDLE_PATTERN = /^[a-z0-9](?:[a-z0-9._-]{1,28}[a-z0-9])?$/;
 
-const isDemoMode = FIREBASE_CONFIG.apiKey.startsWith("REPLACE_WITH");
+const isDemoMode = false;
 
 /* -------------------------------------------------------------------------
    Firebase bootstrap (compat build, loaded via CDN script tags in index.html)
